@@ -20,9 +20,10 @@ std::vector<PathEdge> getPathVector(PathEdge p,Set<PathEdge> closedSet)
 }
 
 ///\brief: A* algorithm, given a starting node, a target node and a heuristic. If the heuristic
-///        returns 0 everytime it is equivalent to Dijkstra's algorithm.
+///        returns 0 every time it is equivalent to Dijkstra's algorithm.
 std::vector<PathEdge> A_Star(Node* startNode,Node* targetNode,std::function<size_t(Node*,Node*)> heuristic)
 {
+    size_t iterationsCounter=0;
     ///two nodes are the same if they have the same ID
     std::function<bool(PathEdge,PathEdge)> isEqual=[](PathEdge a,PathEdge b){ return std::get<2>(a)->ID==std::get<2>(b)->ID;};
     ///If path to a node is shorter, use new path
@@ -38,6 +39,7 @@ std::vector<PathEdge> A_Star(Node* startNode,Node* targetNode,std::function<size
 
     while(!pQueue.isEmpty())
     {
+	iterationsCounter++;
         PathEdge p=pQueue.Pop();
         closedSet.AddElement(p);
         if(std::get<2>(p)->ID==targetNode->ID)
@@ -47,7 +49,7 @@ std::vector<PathEdge> A_Star(Node* startNode,Node* targetNode,std::function<size
         {
             if(!closedSet.Contains(PathEdge(0,NULL,std::get<2>(p)->Edges[i].second)))
             {
-                ///Length of the path + lenght of the last edge + heuristic estimation
+                ///Length of the path + length of the last edge + heuristic estimation
                 size_t pLenght=std::get<0>(p)+std::get<2>(p)->Edges[i].first+heuristic(std::get<2>(p)->Edges[i].second,targetNode);
                 ///If we find a shorter path we update the existing nodes
                 pQueue.AddOrUpdateElement(PathEdge(std::get<0>(p)+std::get<2>(p)->Edges[i].first,

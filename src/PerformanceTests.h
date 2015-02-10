@@ -17,7 +17,7 @@
 #define MIN_SIZE_GRAPH 10
 #define MAX_SIZE_GRAPH 1000
 #define MIN_SIZE_GRID_GRAPH 10
-#define MAX_SIZE_GRID_GRAPH 15000
+#define MAX_SIZE_GRID_GRAPH 10000
 #define BATCH_SIZE 5
 #define MIN_EDGE_COST 1
 #define MAX_EDGE_COST 5
@@ -93,14 +93,14 @@ std::vector<Node> GenerateRandomGrid(size_t width, size_t height, float wallFreq
             size_t idx=x+y*width;
             res[idx].ID=idx;
             if(walls[idx])  continue;
-            if(x!=0 && !walls[idx-1]) 
-	      res[idx].addUndirectedEdge(1,&res[idx-1]);
-            if(x!=width-1 && !walls[idx+1]) 
-	      res[idx].addUndirectedEdge(1,&res[idx+1]);
-            if(y!=0 && !walls[idx-width]) 
-	      res[idx].addUndirectedEdge(1,&res[idx-width]);
-            if(y!=height-1 && !walls[idx+width]) 
-	      res[idx].addUndirectedEdge(1,&res[idx+width]);
+            if(x!=0 && !walls[idx-1])
+	      res[idx].addUndirectedEdge(10,&res[idx-1]);
+            if(x!=width-1 && !walls[idx+1])
+	      res[idx].addUndirectedEdge(10,&res[idx+1]);
+            if(y!=0 && !walls[idx-width])
+	      res[idx].addUndirectedEdge(10,&res[idx-width]);
+            if(y!=height-1 && !walls[idx+width])
+	      res[idx].addUndirectedEdge(10,&res[idx+width]);
         }
     }
     return res;
@@ -193,5 +193,6 @@ TEST (A_StarTest,A_StarGridGraphPerformanceTest)
 
     PerformanceGridGraphTestCycle<uint64_t>("Dijkstra_grid",DijkstraHeuristic,timeDataDump);
     PerformanceGridGraphTestCycle<uint64_t>("Euclidean_grid",EuclideanHeuristic,timeDataDump);
+    PerformanceGridGraphTestCycle<uint64_t>("Euclidean_grid2",EuclideanHeuristic2,timeDataDump);
 }
 #endif // PERFORMANCETESTS_H_INCLUDED

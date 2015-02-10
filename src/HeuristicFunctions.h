@@ -20,4 +20,11 @@ size_t TwoNodesNeighborHeuristic(Node*,Node*);
 /// the target node.
 size_t EuclideanHeuristic(Node*,Node*);
 
+
+///\brief: Heuristic for a grid
+///
+/// Returns the catheti distance and considers the target node the one in
+/// the upper right corner, meaning that the width of the grid is the ID of
+/// the target node.
+size_t EuclideanHeuristic2(Node*,Node*);
 #endif // HEURISTICFUNCTIONS_H_INCLUDED
